@@ -1,13 +1,18 @@
 package com.example.BreederQr.models.animal;
 
 import com.example.BreederQr.models.breedingplace.BreedingPlace;
+import com.example.BreederQr.models.laying.Laying;
 import com.example.BreederQr.models.specie.Specie;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -44,5 +49,8 @@ public class Animal {
     @Column(nullable = false, length = 50)
     private String qr;
 
-
+    @JsonIgnore
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "animal", cascade = CascadeType.ALL)
+    private List<Laying> layings;
 }
