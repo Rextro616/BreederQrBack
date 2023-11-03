@@ -2,6 +2,7 @@ package com.example.BreederQr.models.animal;
 
 import com.example.BreederQr.models.breedingplace.BreedingPlace;
 import com.example.BreederQr.models.laying.Laying;
+import com.example.BreederQr.models.photo.Photo;
 import com.example.BreederQr.models.specie.Specie;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -53,4 +54,9 @@ public class Animal {
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "animal", cascade = CascadeType.ALL)
     private List<Laying> layings;
+
+    @JsonIgnore
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy = "animal", cascade = CascadeType.ALL)
+    private List<Photo> photos;
 }

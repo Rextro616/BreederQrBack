@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BreedingPlaceRepository extends JpaRepository<BreedingPlace, Integer> {
+    
 }
