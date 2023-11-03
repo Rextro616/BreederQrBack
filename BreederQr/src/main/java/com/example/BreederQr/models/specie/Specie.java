@@ -21,8 +21,8 @@ public class Specie extends Auditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(nullable = false, length = 20)
-    private String birthday;
+    @Column(nullable = false, length = 50)
+    private String name;
 
     @JsonIgnore
     @OneToOne(mappedBy = "specie", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
