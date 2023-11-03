@@ -25,6 +25,9 @@ public class AuthApi {
     public ResponseEntity<?> login(@RequestBody @Valid AuthRequest request) {
         try {
 
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            String password = passwordEncoder.encode("12345678");
+
             Authentication authentication = authManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             request.getEmail(), request.getPassword())

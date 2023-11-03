@@ -37,7 +37,7 @@ public class Breeder implements UserDetails {
     @Column(nullable = false, length = 20)
     private String username;
 
-    @Column(nullable = false, length = 64)
+    @Column(nullable = false, length = 200)
     private String password;
 
     @Column(nullable = false, length = 30)
@@ -76,17 +76,23 @@ public class Breeder implements UserDetails {
     @CreatedDate
     @Column(updatable = false)
     LocalDateTime createdAt;
-    @Column(updatable = false)
+
+    @Column(nullable = true, updatable = false)
     int createdBy;
+
     @CreatedDate
-    @Column
+    @Column(nullable = true)
     LocalDateTime updatedAt;
-    @Column
+
+    @Column(nullable = true)
     int updatedBy;
-    @Column()
+
+    @Column(nullable = true)
     Boolean deleted;
-    @Column(updatable = false)
+
+    @Column(nullable = true, updatable = false)
     LocalDateTime deletedAt;
-    @Column(updatable = false)
+
+    @Column(nullable = true, updatable = false)
     int deletedBy;
 }
