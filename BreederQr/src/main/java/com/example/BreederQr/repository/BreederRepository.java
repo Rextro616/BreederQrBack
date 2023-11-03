@@ -35,5 +35,20 @@ public interface BreederRepository extends JpaRepository<Breeder, Integer> {
             @Param("created_at") LocalDateTime createdAt,
             @Param("created_by") Integer createdBy
     );
+    @Transactional
+    @Query(value = "SELECT * FROM breeder where id = ?1",
+            nativeQuery = true)
+    Optional<Breeder> searchBreeder(
+            @Param("id") Integer id
+    );
 
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE breeder SET password = :password, updated_at = :updated_at WHERE id = :id",
+            nativeQuery = true)
+    void updateBreeder(
+            @Param("password") String password,
+            @Param("id") Integer id,
+            @Param("updated_at") LocalDateTime updated_at
+    );
 }
