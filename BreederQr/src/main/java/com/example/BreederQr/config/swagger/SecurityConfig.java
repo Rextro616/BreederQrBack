@@ -29,6 +29,18 @@ public class SecurityConfig {
     @Autowired private BreederRepository userRepo;
     @Autowired private JwtTokenFilter jwtTokenFilter;
 
+    public static final String[] AUTH_WHITELIST = {
+            "/swagger-resources/**",
+            "/actuator/**",
+            "/auth/login",
+            "/v2/api-docs",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui.html",
+            "/swagger-ui/**",
+            "/webjars/**"
+    };
+
     @Bean
     public UserDetailsService userDetailsService() {
         return new UserDetailsService() {
@@ -59,7 +71,7 @@ public class SecurityConfig {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.authorizeRequests()
-                .antMatchers("/auth/login", "/docs/**", "/users").permitAll()
+                .antMatchers(AUTH_WHITELIST).permitAll()
                 .anyRequest().authenticated();
 
         http.exceptionHandling()
