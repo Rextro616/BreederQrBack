@@ -1,5 +1,6 @@
 package com.example.BreederQr.controllers;
 
+import com.example.BreederQr.config.swagger.BreederPlaceWrapper;
 import com.example.BreederQr.models.breedingplace.BreedingPlace;
 import com.example.BreederQr.repository.BreedingPlaceRepository;
 import com.example.BreederQr.services.BreedingPlaceService;
@@ -14,6 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.File;
+import java.io.FileOutputStream;
+
 @Data
 @AllArgsConstructor
 @CrossOrigin
@@ -23,34 +26,37 @@ public class BreedingPlaceController {
 
     BreedingPlaceRepository breedingPlaceRepository;
 
-    @PostMapping("/postBreedingPlace")
-    public ResponseEntity<String> saveBreedingPlace(@Valid @RequestBody BreedingPlace breedingPlace, @RequestParam("logo") MultipartFile multipartFile){
-        ResponseEntity<String> answer = uploadLogo(multipartFile);
-        //corregir
-        int idBreeder = 1;
+    @PostMapping(value = "/postBreedingPlace", consumes = "multipart/form-data")
+    public ResponseEntity<String> saveBreedingPlace(@Valid @ModelAttribute BreederPlaceWrapper breederPlaceWrapper){
+        String path = uploadLogo(breederPlaceWrapper.getImage());
 
-        if (answer.getStatusCode() == HttpStatus.OK){
             breedingPlaceRepository.saveBreedingPlaceRepo(
-                    breedingPlace.getAddress(),
-                    breedingPlace.getDescription(),
-                    answer.getBody(),
-                    breedingPlace.getName(),
-                    breedingPlace.getRegister_number(),
-                    idBreeder);
+                    breederPlaceWrapper.getAddress(),
+                    breederPlaceWrapper.getDescription(),
+                    path,
+                    breederPlaceWrapper.getName(),
+                    breederPlaceWrapper.getRegister_number(),
+                    breederPlaceWrapper.getId_breeder());
 
             return new ResponseEntity<>("Criadero creado exitosamente", HttpStatus.OK);
-        }
-        return new ResponseEntity<>(answer.getBody(), HttpStatus.BAD_REQUEST);
+
     }
 
-    public ResponseEntity<String> uploadLogo(MultipartFile multipartFile){
-        String fileName = multipartFile.getOriginalFilename();
-        String path = "C:\\Users\\6QW95LA_2004\\IdeaProjects\\BreederQrBack\\BreederQr\\src\\main\\resources\\files\\" + fileName;
+
+    public static String uploadLogo(MultipartFile file) {
+        String fileName = file.getOriginalFilename();
+        String path = "";
         try {
-            multipartFile.transferTo( new File(path));
+            path = "C:\\Users\\6QW95LA_2004\\IdeaProjects\\BreederQrBack\\BreederQr\\src\\main\\resources\\files\\" + fileName;
+            File newFile = new File(path);
+            newFile.createNewFile();
+            FileOutputStream myfile = new FileOutputStream(newFile);
+            myfile.write(file.getBytes());
+            myfile.close();
         } catch (Exception e) {
-            return new ResponseEntity<>("Files cannot be updated", HttpStatus.INTERNAL_SERVER_ERROR);
+            e.printStackTrace();
         }
-        return ResponseEntity.ok(path);
+        return path;
     }
+
 }
