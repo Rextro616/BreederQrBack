@@ -38,7 +38,7 @@ public interface BreederRepository extends JpaRepository<Breeder, Integer> {
             @Param("password") String password,
             @Param("mail") String mail,
             @Param("createdAt") LocalDateTime createdAt,
-            @Param("createdBy") int createdBy
+            @Param("createdBy") Integer createdBy
     );
 
 }

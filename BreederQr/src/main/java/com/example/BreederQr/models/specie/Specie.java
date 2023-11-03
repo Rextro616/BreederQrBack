@@ -20,7 +20,7 @@ public class Specie  {
     @Id
     @Column(unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Column(nullable = false, length = 50)
     private String name;
@@ -34,16 +34,16 @@ public class Specie  {
     @Column(updatable = false)
     LocalDateTime createdAt;
     @Column(updatable = false)
-    int createdBy;
+    Integer createdBy;
     @CreatedDate
     @Column
     LocalDateTime updatedAt;
     @Column
-    int updatedBy;
+    Integer updatedBy;
     @Column()
     Boolean deleted;
     @Column(updatable = false)
     LocalDateTime deletedAt;
     @Column(updatable = false)
-    int deletedBy;
+    Integer deletedBy;
 }

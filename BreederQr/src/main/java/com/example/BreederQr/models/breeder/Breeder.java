@@ -23,7 +23,7 @@ public class Breeder implements UserDetails {
     @Id
     @Column(unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Column(nullable = false, length = 20)
     private String name;
@@ -78,14 +78,14 @@ public class Breeder implements UserDetails {
     LocalDateTime createdAt;
 
     @Column(nullable = true, updatable = false)
-    int createdBy;
+    Integer createdBy;
 
     @CreatedDate
     @Column(nullable = true)
     LocalDateTime updatedAt;
 
     @Column(nullable = true)
-    int updatedBy;
+    Integer updatedBy;
 
     @Column(nullable = true)
     Boolean deleted;
@@ -94,5 +94,5 @@ public class Breeder implements UserDetails {
     LocalDateTime deletedAt;
 
     @Column(nullable = true, updatable = false)
-    int deletedBy;
+    Integer deletedBy;
 }

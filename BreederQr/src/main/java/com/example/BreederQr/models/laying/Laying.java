@@ -20,30 +20,30 @@ public class Laying {
     @Id
     @Column(unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "id_animal", nullable = false)
     Animal animal;
 
     @Column(nullable = false)
-    private int amount;
+    private Integer amount;
 
     //Auditable
     @CreatedDate
     @Column(updatable = false)
     LocalDateTime createdAt;
     @Column(updatable = false)
-    int createdBy;
+    Integer createdBy;
     @CreatedDate
     @Column
     LocalDateTime updatedAt;
     @Column
-    int updatedBy;
+    Integer updatedBy;
     @Column()
     Boolean deleted;
     @Column(updatable = false)
     LocalDateTime deletedAt;
     @Column(updatable = false)
-    int deletedBy;
+    Integer deletedBy;
 }
