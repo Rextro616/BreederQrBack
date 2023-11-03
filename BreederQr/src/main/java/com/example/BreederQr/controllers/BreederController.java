@@ -7,8 +7,7 @@ import lombok.Data;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.validation.Valid;
@@ -17,20 +16,22 @@ import java.util.Date;
 import java.util.Optional;
 
 @Data
-@Controller
 @AllArgsConstructor
+@CrossOrigin
+@RestController
+@RequestMapping("/breeder")
 public class BreederController {
 
     BreederRepository breederRepository;
 
 
-    @PostMapping("/breeder/create")
-    public ResponseEntity<Breeder> create (@RequestBody @Valid Breeder breeder) {
+    @PostMapping("postBreeder")
+    public ResponseEntity<String> create (@RequestBody @Valid Breeder breeder) {
 
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String password = passwordEncoder.encode(breeder.getPassword());
 
-        Optional<Breeder>  breeder1 = breederRepository.insert(
+        breederRepository.insert(
                 breeder.getName(),
                 breeder.getLast_name(),
                 breeder.getSecond_last_name(),
@@ -40,8 +41,8 @@ public class BreederController {
                 LocalDateTime.now(),
                 1);
 
-        return ResponseEntity.ok().body(breeder1.get());
-
-
+        return ResponseEntity.ok().body("ok");
     }
+
+
 }

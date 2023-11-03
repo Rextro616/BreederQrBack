@@ -9,8 +9,4 @@ import org.springframework.stereotype.Service;
 public class BreedingPlaceService {
     @Autowired
     BreedingPlaceRepository breedingPlaceRepository;
-
-    Boolean saveBreedingPlace(BreedingPlace breedingPlace, Integer idBreeder){
-        return breedingPlaceRepository.saveBreedingPlaceRepo(breedingPlace.getAddress(), breedingPlace.getDescription(), "rutadellogo", breedingPlace.getName(), breedingPlace.getRegister_number(), idBreeder);
-    }
 }

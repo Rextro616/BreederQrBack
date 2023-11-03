@@ -6,8 +6,7 @@ create table IF NOT EXISTS specie (
 
 create table if not exists breederqr.breeder
 (
-    id               int auto_increment
-    primary key,
+    id               int auto_increment primary key,
     created_at       datetime(6)  null,
     created_by       int          null,
     deleted          bit          null,
