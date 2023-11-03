@@ -1,6 +1,5 @@
 package com.example.BreederQr.models.animal;
 
-import com.example.BreederQr.infra.Auditable;
 import com.example.BreederQr.models.breedingplace.BreedingPlace;
 import com.example.BreederQr.models.laying.Laying;
 import com.example.BreederQr.models.photo.Photo;
@@ -12,8 +11,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -21,7 +22,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
-public class Animal extends Auditable {
+public class Animal {
     @Id
     @Column(unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,4 +61,22 @@ public class Animal extends Auditable {
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "animal", cascade = CascadeType.ALL)
     private List<Photo> photos;
+
+    //Auditable
+    @CreatedDate
+    @Column(updatable = false)
+    LocalDateTime createdAt;
+    @Column(updatable = false)
+    int createdBy;
+    @CreatedDate
+    @Column
+    LocalDateTime updatedAt;
+    @Column
+    int updatedBy;
+    @Column()
+    Boolean deleted;
+    @Column(updatable = false)
+    LocalDateTime deletedAt;
+    @Column(updatable = false)
+    int deletedBy;
 }

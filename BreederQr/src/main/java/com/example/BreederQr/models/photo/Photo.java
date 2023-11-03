@@ -1,20 +1,21 @@
 package com.example.BreederQr.models.photo;
 
-import com.example.BreederQr.infra.Auditable;
 import com.example.BreederQr.models.animal.Animal;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
-public class Photo extends Auditable {
+public class Photo {
     @Id
     @Column(unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,4 +27,22 @@ public class Photo extends Auditable {
 
     @Column(nullable = false, length = 50)
     private String photo;
+
+    //Auditable
+    @CreatedDate
+    @Column(updatable = false)
+    LocalDateTime createdAt;
+    @Column(updatable = false)
+    int createdBy;
+    @CreatedDate
+    @Column
+    LocalDateTime updatedAt;
+    @Column
+    int updatedBy;
+    @Column()
+    Boolean deleted;
+    @Column(updatable = false)
+    LocalDateTime deletedAt;
+    @Column(updatable = false)
+    int deletedBy;
 }

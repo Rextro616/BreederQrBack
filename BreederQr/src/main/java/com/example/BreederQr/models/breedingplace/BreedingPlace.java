@@ -1,6 +1,5 @@
 package com.example.BreederQr.models.breedingplace;
 
-import com.example.BreederQr.infra.Auditable;
 import com.example.BreederQr.models.animal.Animal;
 import com.example.BreederQr.models.breeder.Breeder;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -10,8 +9,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -19,7 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
-public class BreedingPlace extends Auditable {
+public class BreedingPlace {
     @Id
     @Column(unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,4 +48,22 @@ public class BreedingPlace extends Auditable {
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy = "breedingPlace", cascade = CascadeType.ALL)
     private List<Animal> animals;
+
+    //Auditable
+    @CreatedDate
+    @Column(updatable = false)
+    LocalDateTime createdAt;
+    @Column(updatable = false)
+    int createdBy;
+    @CreatedDate
+    @Column
+    LocalDateTime updatedAt;
+    @Column
+    int updatedBy;
+    @Column()
+    Boolean deleted;
+    @Column(updatable = false)
+    LocalDateTime deletedAt;
+    @Column(updatable = false)
+    int deletedBy;
 }
