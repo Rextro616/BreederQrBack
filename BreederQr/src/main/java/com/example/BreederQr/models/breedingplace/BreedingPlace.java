@@ -1,5 +1,6 @@
 package com.example.BreederQr.models.breedingplace;
 
+import com.example.BreederQr.infra.Auditable;
 import com.example.BreederQr.models.animal.Animal;
 import com.example.BreederQr.models.breeder.Breeder;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -18,7 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
-public class BreedingPlace {
+public class BreedingPlace extends Auditable {
     @Id
     @Column(unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)

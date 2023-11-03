@@ -1,5 +1,6 @@
 package com.example.BreederQr.models.animal;
 
+import com.example.BreederQr.infra.Auditable;
 import com.example.BreederQr.models.breedingplace.BreedingPlace;
 import com.example.BreederQr.models.laying.Laying;
 import com.example.BreederQr.models.photo.Photo;
@@ -20,7 +21,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
-public class Animal {
+public class Animal extends Auditable {
     @Id
     @Column(unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)

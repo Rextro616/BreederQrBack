@@ -1,5 +1,6 @@
 package com.example.BreederQr.models.photo;
 
+import com.example.BreederQr.infra.Auditable;
 import com.example.BreederQr.models.animal.Animal;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +14,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
-public class Photo {
+public class Photo extends Auditable {
     @Id
     @Column(unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)

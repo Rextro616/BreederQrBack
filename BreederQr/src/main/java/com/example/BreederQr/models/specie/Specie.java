@@ -1,5 +1,6 @@
 package com.example.BreederQr.models.specie;
 
+import com.example.BreederQr.infra.Auditable;
 import com.example.BreederQr.models.animal.Animal;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -14,7 +15,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
-public class Specie {
+public class Specie extends Auditable {
     @Id
     @Column(unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
