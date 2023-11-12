@@ -25,7 +25,6 @@ import java.time.LocalDateTime;
 @RestController
 @RequestMapping("/animal")
 public class AnimalController {
-
     AnimalRepository animalRepository;
 
     @PostMapping("postBreeder")

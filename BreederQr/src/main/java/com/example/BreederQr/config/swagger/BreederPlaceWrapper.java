@@ -11,7 +11,6 @@ public class BreederPlaceWrapper {
     private String name;
     private String address;
     private String register_number;
-
     private String description;
 
 }

@@ -65,13 +65,16 @@ public class BreederController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    @DeleteMapping("/deleteBreeder")
-    public  ResponseEntity<Breeder> updateBreeder(@RequestBody @Valid Breeder breeder) {
+    @PutMapping("/softDeleteBreeder")
+    public  ResponseEntity<Breeder> softDeleteBreeder(@RequestBody @Valid Breeder breeder) {
         Optional<Breeder> breeder1 = breederRepository.searchBreeder(breeder.getId());
 
         if (breeder1.isPresent()){
-            breederRepository.updateBreeder(password, breeder.getId(), LocalDateTime.now());
+            breederRepository.updateBreeder(true, LocalDateTime.now(), breeder.getId());
             return new ResponseEntity<>(breederRepository.searchBreeder(breeder.getId()).get(), HttpStatus.OK);
         }
+
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+
 }

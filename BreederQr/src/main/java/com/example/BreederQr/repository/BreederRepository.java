@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -50,5 +51,15 @@ public interface BreederRepository extends JpaRepository<Breeder, Integer> {
             @Param("password") String password,
             @Param("id") Integer id,
             @Param("updated_at") LocalDateTime updated_at
+    );
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE breeder SET deleted = :deleted, deleted_at = :deleted_at WHERE id = :id",
+            nativeQuery = true)
+    void updateBreeder(
+            @Param("deleted") Boolean deleted,
+            @Param("deleted_at") LocalDateTime updated_at,
+            @Param("id") Integer id
     );
 }

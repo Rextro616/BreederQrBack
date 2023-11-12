@@ -1,15 +1,11 @@
 package com.example.BreederQr.controllers;
 
 import com.example.BreederQr.config.swagger.BreederPlaceWrapper;
-import com.example.BreederQr.models.breedingplace.BreedingPlace;
 import com.example.BreederQr.repository.BreedingPlaceRepository;
-import com.example.BreederQr.services.BreedingPlaceService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,7 +24,7 @@ public class BreedingPlaceController {
 
     @PostMapping(value = "/postBreedingPlace", consumes = "multipart/form-data")
     public ResponseEntity<String> saveBreedingPlace(@Valid @ModelAttribute BreederPlaceWrapper breederPlaceWrapper){
-        String path = uploadLogo(breederPlaceWrapper.getImage());
+        String path = uploadImage(breederPlaceWrapper.getImage(), "C:\\Users\\6QW95LA_2004\\IdeaProjects\\BreederQrBack\\BreederQr\\src\\main\\resources\\files\\logos\\");
 
             breedingPlaceRepository.saveBreedingPlaceRepo(
                     breederPlaceWrapper.getAddress(),
@@ -43,11 +39,10 @@ public class BreedingPlaceController {
     }
 
 
-    public static String uploadLogo(MultipartFile file) {
+    public static String uploadImage(MultipartFile file, String path) {
         String fileName = file.getOriginalFilename();
-        String path = "";
         try {
-            path = "C:\\Users\\6QW95LA_2004\\IdeaProjects\\BreederQrBack\\BreederQr\\src\\main\\resources\\files\\" + fileName;
+            path = path + fileName;
             File newFile = new File(path);
             newFile.createNewFile();
             FileOutputStream myfile = new FileOutputStream(newFile);
