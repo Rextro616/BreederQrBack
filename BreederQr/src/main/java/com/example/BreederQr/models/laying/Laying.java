@@ -29,6 +29,9 @@ public class Laying {
     @Column(nullable = false)
     private Integer amount;
 
+    @Column()
+    private Integer deads;
+
     //Auditable
     @CreatedDate
     @Column(updatable = false)
