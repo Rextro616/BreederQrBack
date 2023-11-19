@@ -24,7 +24,7 @@ public interface BreederRepository extends JpaRepository<Breeder, Integer> {
     @Transactional
     @Modifying
     @Query(value = "insert into breeder (name, last_name,second_last_name,username,password,mail,created_at,created_by) " +
-            "VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8)",
+            "VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)",
             nativeQuery = true)
     void insert(
             @Param("name") String name,
@@ -33,11 +33,13 @@ public interface BreederRepository extends JpaRepository<Breeder, Integer> {
             @Param("username") String username,
             @Param("password") String password,
             @Param("mail") String mail,
-            @Param("created_at") LocalDateTime createdAt,
-            @Param("created_by") Integer createdBy
+            @Param("created_at") LocalDateTime createdAt
+
     );
     @Transactional
-    @Query(value = "SELECT * FROM breeder where id = ?1",
+    @Query(value = "SELECT id, name, last_name, second_last_name, username, " +
+            "password, mail, created_at, created_by, deleted, deleted_at, " +
+            "deleted_by, updated_at, updated_by FROM breeder where id = ?1 AND deleted is null",
             nativeQuery = true)
     Optional<Breeder> searchBreeder(
             @Param("id") Integer id
@@ -57,7 +59,7 @@ public interface BreederRepository extends JpaRepository<Breeder, Integer> {
     @Modifying
     @Query(value = "UPDATE breeder SET deleted = :deleted, deleted_at = :deleted_at WHERE id = :id",
             nativeQuery = true)
-    void updateBreeder(
+    void softDeleteBreeder(
             @Param("deleted") Boolean deleted,
             @Param("deleted_at") LocalDateTime updated_at,
             @Param("id") Integer id

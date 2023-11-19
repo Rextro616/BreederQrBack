@@ -2,6 +2,7 @@ package com.example.BreederQr.controllers;
 
 import com.example.BreederQr.models.breeder.Breeder;
 import com.example.BreederQr.repository.BreederRepository;
+import com.example.BreederQr.services.BreederService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.data.repository.query.Param;
@@ -22,59 +23,45 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/breeder")
 public class BreederController {
-    BreederRepository breederRepository;
+    BreederService breederService;
 
     @PostMapping("postBreeder")
-    public ResponseEntity<String> create (@RequestBody @Valid Breeder breeder) {
-
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String password = passwordEncoder.encode(breeder.getPassword());
-
-        breederRepository.insert(
-                breeder.getName(),
-                breeder.getLast_name(),
-                breeder.getSecond_last_name(),
-                breeder.getUsername(),
-                password,
-                breeder.getMail(),
-                LocalDateTime.now(),
-                1);
-
-        return ResponseEntity.ok().body("ok");
+    public ResponseEntity<String> createBreeder (@RequestBody @Valid Breeder breeder) {
+        if (breederService.createBreeder(breeder)){
+            return ResponseEntity.ok().body("usuario creado");
+        } else {
+            return ResponseEntity.internalServerError().body("El email ya existe");
+        }
     }
 
-    @GetMapping("/putBreeder")
+    @GetMapping("/getBreeder")
     public ResponseEntity<Breeder> getBreeder(@RequestParam Integer idBreeder){
-        Optional<Breeder> breeder1 = breederRepository.searchBreeder(idBreeder);
-
-        return breeder1.map(breeder -> new ResponseEntity<>(breeder, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return breederService.getBreeder(idBreeder).map(breeder -> {
+            breeder.setPassword("");
+            return new ResponseEntity<>(breeder, HttpStatus.OK);
+        }).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PutMapping("/putBreeder")
     public  ResponseEntity<Breeder> updateBreeder(@RequestBody @Valid Breeder breeder) {
-        Optional<Breeder> breeder1 = breederRepository.searchBreeder(breeder.getId());
+        Breeder breeder1 = breederService.putBreeder(breeder);
 
-        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        String password = passwordEncoder.encode(breeder.getPassword());
-
-        if (breeder1.isPresent()){
-            breederRepository.updateBreeder(password, breeder.getId(), LocalDateTime.now());
-            return new ResponseEntity<>(breederRepository.searchBreeder(breeder.getId()).get(), HttpStatus.OK);
+        if (breeder1 != null){
+            return new ResponseEntity<>(breeder, HttpStatus.OK);
         }
 
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PutMapping("/softDeleteBreeder")
     public  ResponseEntity<Breeder> softDeleteBreeder(@RequestBody @Valid Breeder breeder) {
-        Optional<Breeder> breeder1 = breederRepository.searchBreeder(breeder.getId());
+        Breeder breeder1 = breederService.softDeleteBreeder(breeder);
 
-        if (breeder1.isPresent()){
-            breederRepository.updateBreeder(true, LocalDateTime.now(), breeder.getId());
-            return new ResponseEntity<>(breederRepository.searchBreeder(breeder.getId()).get(), HttpStatus.OK);
+        if (breeder1 != null){
+            return new ResponseEntity<>(breeder1, HttpStatus.OK);
         }
 
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
 }

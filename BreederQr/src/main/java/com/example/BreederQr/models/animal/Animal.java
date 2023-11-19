@@ -22,7 +22,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
-public class Animal {
+public class Animal{
     @Id
     @Column(unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,6 +35,9 @@ public class Animal {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "id_breeding_place", nullable = false)
     BreedingPlace breedingPlace;
+
+    @Column(length = 20)
+    private String name;
 
     @Column(nullable = false, length = 20)
     private String birthday;
@@ -49,7 +52,7 @@ public class Animal {
     @Column(nullable = false, length = 1)
     private String gender;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 200)
     private String qr;
 
     @JsonIgnore

@@ -28,7 +28,7 @@ public class Specie  {
     @JsonIgnore
     @OneToOne(mappedBy = "specie", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Animal animal;
-
+/*
     //Auditable
     @CreatedDate
     @Column(updatable = false)
@@ -45,5 +45,5 @@ public class Specie  {
     @Column(updatable = false)
     LocalDateTime deletedAt;
     @Column(updatable = false)
-    Integer deletedBy;
+    Integer deletedBy;*/
 }
