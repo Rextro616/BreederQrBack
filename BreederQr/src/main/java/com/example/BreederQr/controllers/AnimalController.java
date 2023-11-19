@@ -1,15 +1,23 @@
 package com.example.BreederQr.controllers;
 
-import com.example.BreederQr.models.animal.AnimalWrapper;
+import com.example.BreederQr.config.swagger.AnimalWrapper;
+import com.example.BreederQr.config.swagger.BreederPlaceWrapper;
 import com.example.BreederQr.models.animal.Animal;
+import com.example.BreederQr.models.breeder.Breeder;
+import com.example.BreederQr.repository.AnimalRepository;
+import com.example.BreederQr.repository.BreederRepository;
 import com.example.BreederQr.services.AnimalService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
