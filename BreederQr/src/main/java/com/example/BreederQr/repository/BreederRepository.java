@@ -23,7 +23,7 @@ public interface BreederRepository extends JpaRepository<Breeder, Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "insert into breeder (name, last_name,second_last_name,username,password,mail,created_at,created_by) " +
+    @Query(value = "insert into breeder (name, last_name,second_last_name,username,password,mail,created_at) " +
             "VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7)",
             nativeQuery = true)
     void insert(
