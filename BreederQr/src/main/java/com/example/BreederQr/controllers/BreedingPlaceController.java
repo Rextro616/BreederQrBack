@@ -1,6 +1,6 @@
 package com.example.BreederQr.controllers;
 
-import com.example.BreederQr.config.swagger.BreederPlaceWrapper;
+import com.example.BreederQr.models.breedingplace.BreederPlaceWrapper;
 import com.example.BreederQr.models.breedingplace.BreedingPlace;
 import com.example.BreederQr.services.BreedingPlaceService;
 import lombok.AllArgsConstructor;

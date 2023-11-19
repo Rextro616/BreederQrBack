@@ -1,8 +1,7 @@
 package com.example.BreederQr.services;
 
-import com.example.BreederQr.config.swagger.AnimalWrapper;
+import com.example.BreederQr.models.animal.AnimalWrapper;
 import com.example.BreederQr.models.animal.Animal;
-import com.example.BreederQr.models.breeder.Breeder;
 import com.example.BreederQr.models.breedingplace.BreedingPlace;
 import com.example.BreederQr.repository.AnimalRepository;
 import lombok.AllArgsConstructor;
