@@ -1,4 +1,4 @@
-package com.example.BreederQr.config.swagger;
+package com.example.BreederQr.models.breedingplace;
 
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
