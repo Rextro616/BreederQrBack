@@ -1,7 +1,6 @@
 package com.example.BreederQr.services;
 
 import com.example.BreederQr.models.breeder.Breeder;
-import com.example.BreederQr.models.breeder.BreederWrapper;
 import com.example.BreederQr.repository.BreederRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,9 +14,8 @@ import java.util.Optional;
 @Service
 public class BreederService {
     BreederRepository breederRepository;
-    CommonsService commonsService;
 
-    public Boolean createBreeder(BreederWrapper breeder){
+    public Boolean createBreeder(Breeder breeder){
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String password = passwordEncoder.encode(breeder.getPassword());
 
@@ -37,31 +35,30 @@ public class BreederService {
         return true;
     }
 
-    public Optional<Breeder> getBreeder(String token){
-        Integer idBreeder = commonsService.getIdByToken(token);
+    public Optional<Breeder> getBreeder(int idBreeder){
         return breederRepository.searchBreeder(idBreeder);
     }
 
-    public Breeder putBreeder(BreederWrapper breeder, String token){
-        Optional<Breeder> breeder1 = breederRepository.searchBreeder(commonsService.getIdByToken(token));
+    public Breeder putBreeder(Breeder breeder){
+        Optional<Breeder> breeder1 = breederRepository.searchBreeder(breeder.getId());
 
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String password = passwordEncoder.encode(breeder.getPassword());
 
         if (breeder1.isPresent()){
-            breederRepository.updateBreeder(password, commonsService.getIdByToken(token), LocalDateTime.now());
-            return breederRepository.searchBreeder(commonsService.getIdByToken(token)).get();
+            breederRepository.updateBreeder(password, breeder.getId(), LocalDateTime.now());
+            return breederRepository.searchBreeder(breeder.getId()).get();
         }
 
         return null;
     }
 
-    public Breeder softDeleteBreeder(String token){
-        Optional<Breeder> breeder1 = breederRepository.searchBreeder(commonsService.getIdByToken(token));
+    public Breeder softDeleteBreeder(Breeder breeder){
+        Optional<Breeder> breeder1 = breederRepository.searchBreeder(breeder.getId());
 
         if (breeder1.isPresent()){
-            breederRepository.softDeleteBreeder(true, LocalDateTime.now(), commonsService.getIdByToken(token));
-            return breederRepository.searchBreeder(commonsService.getIdByToken(token)).get();
+            breederRepository.softDeleteBreeder(true, LocalDateTime.now(), breeder.getId());
+            return breederRepository.searchBreeder(breeder.getId()).get();
         }
 
         return null;
