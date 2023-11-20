@@ -44,7 +44,7 @@ public class BreedingPlaceService {
             BreedingPlace breedingPlace1 = breedingPlace.get();
             CommonsService.deleteImage(breedingPlace1.getLogo());
 
-            String path = CommonsService.uploadImage(breederPlaceWrapper.getImage(), "C:\\Users\\flore\\Downloads\\BreederQrBack\\BreederQr\\src\\main\\resources\\files\\logos\\");
+            String path = CommonsService.uploadImage(breederPlaceWrapper.getImage(), "");
             breedingPlaceRepository.updateBreedingPlace(
                     breedingPlace1.getId(),
                     breederPlaceWrapper.getAddress(),

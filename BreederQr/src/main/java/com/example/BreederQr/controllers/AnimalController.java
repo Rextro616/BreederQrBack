@@ -30,7 +30,7 @@ public class AnimalController {
     @GetMapping("/getAllAnimals")
     public ResponseEntity<?> getAllAnimals(@RequestParam String token){
         Optional<List<Animal>> animals = animalService.getAllAnimals(token);
-        if (animals.isPresent() && animals.get().size()>0){
+        if (animals.isPresent() && !animals.get().isEmpty()){
             return new ResponseEntity<>(animals.get(), HttpStatus.OK);
         }
         return new ResponseEntity<>("No existen animales en el criadero", HttpStatus.NOT_FOUND);
