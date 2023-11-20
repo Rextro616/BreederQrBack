@@ -1,6 +1,6 @@
 package com.example.BreederQr.services;
 
-import com.example.BreederQr.config.swagger.BreederPlaceWrapper;
+import com.example.BreederQr.models.breedingplace.BreederPlaceWrapper;
 import com.example.BreederQr.models.breedingplace.BreedingPlace;
 import com.example.BreederQr.repository.BreedingPlaceRepository;
 import lombok.AllArgsConstructor;
@@ -16,7 +16,7 @@ public class BreedingPlaceService {
     CommonsService commonsService;
 
     public void saveBreedingPlace(BreederPlaceWrapper breederPlaceWrapper, String token){
-        String path = CommonsService.uploadImage(breederPlaceWrapper.getImage(), "C:\\Users\\6QW95LA_2004\\IdeaProjects\\BreederQrBack\\BreederQr\\src\\main\\resources\\files\\logos\\");
+        String path = CommonsService.uploadImage(breederPlaceWrapper.getImage(), "/Users/rextro/Documents/Github\\ Repository/BreederQrBack/BreederQr/src/main/resources/files/logos");
         Integer idBreeder = commonsService.getIdByToken(token);
 
         breedingPlaceRepository.saveBreedingPlaceRepo(
@@ -44,7 +44,7 @@ public class BreedingPlaceService {
             BreedingPlace breedingPlace1 = breedingPlace.get();
             CommonsService.deleteImage(breedingPlace1.getLogo());
 
-            String path = CommonsService.uploadImage(breederPlaceWrapper.getImage(), "C:\\Users\\flore\\Downloads\\BreederQrBack\\BreederQr\\src\\main\\resources\\files\\logos\\");
+            String path = CommonsService.uploadImage(breederPlaceWrapper.getImage(), "/Users/rextro/Documents/Github\\ Repository/BreederQrBack/BreederQr/src/main/resources/files/logos");
             breedingPlaceRepository.updateBreedingPlace(
                     breedingPlace1.getId(),
                     breederPlaceWrapper.getAddress(),

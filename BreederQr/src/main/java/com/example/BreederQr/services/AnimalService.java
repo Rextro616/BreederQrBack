@@ -1,8 +1,7 @@
 package com.example.BreederQr.services;
 
-import com.example.BreederQr.config.swagger.AnimalWrapper;
+import com.example.BreederQr.models.animal.AnimalWrapper;
 import com.example.BreederQr.models.animal.Animal;
-import com.example.BreederQr.models.breeder.Breeder;
 import com.example.BreederQr.models.breedingplace.BreedingPlace;
 import com.example.BreederQr.repository.AnimalRepository;
 import lombok.AllArgsConstructor;
@@ -21,7 +20,7 @@ public class AnimalService {
 
     public void createAnimal(AnimalWrapper animal, String token){
         Integer idBreeder = commonsService.getIdByToken(token);
-        String path = CommonsService.uploadImage(animal.getQr(), "C:\\Users\\6QW95LA_2004\\IdeaProjects\\BreederQrBack\\BreederQr\\src\\main\\resources\\files\\qrs\\");
+        String path = CommonsService.uploadImage(animal.getQr(), "/Users/rextro/Documents/Github\\ Repository/BreederQrBack/BreederQr/src/main/resources/files/qrs");
 
         animalRepository.insert(
                 animal.getName(),
