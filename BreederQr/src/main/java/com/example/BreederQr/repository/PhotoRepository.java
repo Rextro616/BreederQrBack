@@ -37,6 +37,15 @@ public interface PhotoRepository extends JpaRepository<Photo, Integer> {
     );
 
     @Transactional
+    @Query(value = "SELECT id, photo, id_animal, " +
+            "created_at, created_by, deleted, deleted_at, deleted_by, updated_at, updated_by " +
+            "FROM photo " +
+            "WHERE id = ?1 AND deleted is null", nativeQuery = true)
+    Optional<Photo> getPhotoById(
+            @Param("id")Integer id
+    );
+
+    @Transactional
     @Modifying
     @Query(value = "UPDATE photo SET deleted = :deleted, deleted_at = :deleted_at, deleted_by = :deleted_by " +
             "WHERE id = :id",

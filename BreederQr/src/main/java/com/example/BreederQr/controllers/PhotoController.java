@@ -33,10 +33,18 @@ public class PhotoController {
     public ResponseEntity<?> getPhoto(@RequestParam Integer idBreedingPace){
         Optional<List<Photo>> photo = photoService.getPhoto(idBreedingPace);
 
-        if(photo.isPresent() && !photo.get().isEmpty()){
+        if(photo.isPresent()){
             return new ResponseEntity<>(photo.get(), HttpStatus.OK);
         }
 
         return new ResponseEntity<String>("El animal no existe", HttpStatus.NOT_FOUND);
+    }
+
+    @PutMapping("/deletePhoto")
+    public ResponseEntity<?> softDeleteBreedingPlace(@RequestParam Integer idPhoto, @RequestParam String token){
+        if (photoService.deletePhoto(idPhoto, token)){
+            return new ResponseEntity<>("Imagen borrada", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Error al borrar la imagen", HttpStatus.BAD_REQUEST);
     }
 }

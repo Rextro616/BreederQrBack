@@ -21,7 +21,7 @@ public class PhotoService {
 
     public void postPhoto(String token, PhotoWrapper photoWrapper){
         Integer idBreeder = commonsService.getIdByToken(token);
-        String path = CommonsService.uploadImage(photoWrapper.getPhoto(),"/Users/rextro/Documents/Github\\ Repository/BreederQrBack/BreederQr/src/main/resources/files/Animals");
+        String path = CommonsService.uploadImage(photoWrapper.getPhoto(),"/Users/rextro/Documents/Github Repository/BreederQrBack/BreederQr/src/main/resources/files/Animals/");
 
         photoRepository.insert(
                 path,
@@ -33,5 +33,24 @@ public class PhotoService {
 
     public Optional<List<Photo>> getPhoto(Integer idBreedingPlace){
         return photoRepository.getPhoto(idBreedingPlace);
+    }
+
+    public Boolean deletePhoto(Integer idPhoto, String token){
+        Integer idBreeder = commonsService.getIdByToken(token);
+        Optional<Photo> photo = photoRepository.getPhotoById(idPhoto);
+
+        if (photo.isPresent()){
+            CommonsService.deleteImage(photo.get().getPhoto());
+
+            photoRepository.softDeletePhoto(
+                    true,
+                    LocalDateTime.now(),
+                    idBreeder,
+                    idPhoto
+            );
+            return true;
+        }
+
+        return false;
     }
 }

@@ -25,7 +25,7 @@ public class Photo {
     @JoinColumn(name = "id_animal", nullable = false)
     Animal animal;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 200)
     private String photo;
 
     //Auditable
