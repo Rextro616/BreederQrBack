@@ -10,7 +10,7 @@ public class AnimalWrapper {
     private Integer breedingPlace;
     private String birthday;
     private String description;
-    private String register_number;
+    private String registerNumber;
     private String gender;
     private MultipartFile qr;
 
