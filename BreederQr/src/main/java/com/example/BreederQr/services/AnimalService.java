@@ -22,7 +22,7 @@ public class AnimalService {
 
     public void createAnimal(AnimalWrapper animal, String token){
         Integer idBreeder = commonsService.getIdByToken(token);
-        String path = CommonsService.uploadImage(animal.getQr(), "/Users/rextro/Documents/Github Repository/BreederQrBack/BreederQr/src/main/resources/files/qrs/");
+        String path = CommonsService.uploadImage(animal.getQr(), "/Users/rextro/Documents/Github Repository/BreederQrBack/BreederQr/src/main/resources/files/animals/");
 
         animalRepository.insert(
                 animal.getName(),
@@ -59,7 +59,7 @@ public class AnimalService {
             Animal animalChange = animal.get();
             CommonsService.deleteImage(animalChange.getQr());
 
-            String path = CommonsService.uploadImage(animalWrapper.getQr(), "/Users/rextro/Documents/Github Repository/BreederQrBack/BreederQr/src/main/resources/files/Animals/");
+            String path = CommonsService.uploadImage(animalWrapper.getQr(), "/Users/rextro/Documents/Github Repository/BreederQrBack/BreederQr/src/main/resources/files/animals/");
             animalRepository.updateAnimal(
                     animalChange.getId(),
                     animalWrapper.getName(),
