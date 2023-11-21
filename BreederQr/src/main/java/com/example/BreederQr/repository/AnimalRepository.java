@@ -33,9 +33,19 @@ public interface AnimalRepository extends JpaRepository<Animal, Integer> {
             @Param("created_by") Integer createdBy);
 
     @Transactional
-    @Query(value = "SELECT * FROM animal WHERE id_breeding_place = ?1 AND deleted is null", nativeQuery = true)
+    @Query(value = "SELECT id, name, id_specie, id_breeding_place, birthday, description, register_number, gender, qr, " +
+            "created_at, created_by, deleted, deleted_at, deleted_by, updated_at, updated_by " +
+            "FROM animal WHERE id_breeding_place = ?1 AND deleted is null", nativeQuery = true)
     Optional<List<Animal>> getAllAnimals(
             @Param("id_breeding_place") Integer idBreedingPlace
+    );
+
+    @Transactional
+    @Query(value = "SELECT id, name, id_specie, id_breeding_place, birthday, description, register_number, gender, qr, " +
+            "created_at, created_by, deleted, deleted_at, deleted_by, updated_at, updated_by " +
+            "FROM animal WHERE id = ?1 AND deleted is null", nativeQuery = true)
+    Optional<Animal> getAnimalById(
+            @Param("id") Integer id
     );
 
     @Transactional
@@ -45,7 +55,8 @@ public interface AnimalRepository extends JpaRepository<Animal, Integer> {
             "updated_at = :updated_at, updated_by = :updated_by " +
             "WHERE id = :id AND deleted is null",
             nativeQuery = true)
-    void updateBreedingPlace(
+    void updateAnimal(
+            @Param("id") Integer id,
             @Param("name") String name,
             @Param("id_specie") Integer idSpecie,
             @Param("birthday") String birthday,
@@ -57,15 +68,15 @@ public interface AnimalRepository extends JpaRepository<Animal, Integer> {
             @Param("updated_by") Integer updatedBy
     );
 
-/*    @Transactional
+    @Transactional
     @Modifying
-    @Query(value = "UPDATE breeding_place SET deleted = :deleted, deleted_at = :deleted_at, deleted_by = :deleted_by " +
+    @Query(value = "UPDATE animal SET deleted = :deleted, deleted_at = :deleted_at, deleted_by = :deleted_by " +
             "WHERE id = :id",
             nativeQuery = true)
-    void softDeleteBreedingPlace(
+    void softDeleteAnimal(
             @Param("deleted") Boolean deleted,
             @Param("deleted_at") LocalDateTime updatedAt,
             @Param("deleted_by") Integer deletedBy,
             @Param("id") Integer id
-    );*/
+    );
 }
