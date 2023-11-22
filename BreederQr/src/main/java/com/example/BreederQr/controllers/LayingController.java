@@ -2,6 +2,7 @@ package com.example.BreederQr.controllers;
 
 import com.example.BreederQr.models.laying.Laying;
 import com.example.BreederQr.models.laying.LayingWrapper;
+import com.example.BreederQr.services.CommonsService;
 import com.example.BreederQr.services.LayingService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,8 +22,14 @@ import java.util.Optional;
 public class LayingController {
 
     LayingService layingService;
+    CommonsService commonsService;
+
     @PostMapping("/postLaying")
     public ResponseEntity<String> createLaying (@Valid @ModelAttribute LayingWrapper layingWrapper, @RequestParam String token) {
+        if(commonsService.getIdByToken(token) == null){
+            return new ResponseEntity<String>("No autorizado", HttpStatus.FORBIDDEN);
+        }
+
         layingService.createLaying(layingWrapper, token);
         return new ResponseEntity<>("Puesta registrada exitosamente", HttpStatus.OK);
     }
@@ -50,6 +57,10 @@ public class LayingController {
 
     @PutMapping("/putLaying")
     public ResponseEntity<String> putLaying(@Valid @ModelAttribute LayingWrapper layingWrapper, @RequestParam String token, @RequestParam Integer id){
+        if(commonsService.getIdByToken(token) == null){
+            return new ResponseEntity<String>("No autorizado", HttpStatus.FORBIDDEN);
+        }
+
         if (layingService.putLaying(layingWrapper, token, id)){
             return new ResponseEntity<>("Puesta actualizada correctamente", HttpStatus.OK);
         }
@@ -59,6 +70,10 @@ public class LayingController {
 
     @PutMapping("/deleteLaying")
     public ResponseEntity<?> softDeleteLaying(@RequestParam String token, @RequestParam Integer id){
+        if(commonsService.getIdByToken(token) == null){
+            return new ResponseEntity<String>("No autorizado", HttpStatus.FORBIDDEN);
+        }
+
         if (layingService.deleteLaying(token, id)){
             return new ResponseEntity<>("Animal borrado", HttpStatus.OK);
         }

@@ -4,6 +4,7 @@ import com.example.BreederQr.models.animal.AnimalWrapper;
 import com.example.BreederQr.models.animal.Animal;
 import com.example.BreederQr.repository.BreedingPlaceRepository;
 import com.example.BreederQr.services.AnimalService;
+import com.example.BreederQr.services.CommonsService;
 import com.google.zxing.WriterException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,15 +24,24 @@ import java.util.Optional;
 @RequestMapping("/animal")
 public class AnimalController {
     AnimalService animalService;
+    CommonsService commonsService;
 
     @PostMapping(value = "/postAnimal", consumes = "multipart/form-data")
     public ResponseEntity<String> createAnimal (@Valid @ModelAttribute AnimalWrapper animalWrapper, @RequestParam String token) throws IOException, WriterException {
+        if(commonsService.getIdByToken(token) == null){
+            return new ResponseEntity<String>("No autorizado", HttpStatus.FORBIDDEN);
+        }
+
         animalService.createAnimal(animalWrapper, token);
         return new ResponseEntity<>("Animal creado exitosamente", HttpStatus.OK);
     }
 
     @GetMapping("/getAllAnimals")
     public ResponseEntity<?> getAllAnimals(@RequestParam String token){
+        if(commonsService.getIdByToken(token) == null){
+            return new ResponseEntity<String>("No autorizado", HttpStatus.FORBIDDEN);
+        }
+
         Optional<List<Animal>> animals = animalService.getAllAnimals(token);
 
         if (animals.isPresent()){
@@ -53,6 +63,10 @@ public class AnimalController {
 
     @PostMapping(value = "/putAnimal", consumes = "multipart/form-data")
     public ResponseEntity<String> putAnimal(@Valid @ModelAttribute AnimalWrapper animalWrapper, @RequestParam String token, @RequestParam Integer id) throws IOException, WriterException {
+        if(commonsService.getIdByToken(token) == null){
+            return new ResponseEntity<String>("No autorizado", HttpStatus.FORBIDDEN);
+        }
+
         if (animalService.putAnimal(animalWrapper, token, id)){
             return new ResponseEntity<>("Animal actualizado correctamente", HttpStatus.OK);
         }
@@ -62,6 +76,10 @@ public class AnimalController {
 
     @PutMapping("/deleteAnimal")
     public ResponseEntity<?> softDeleteAnimal(@RequestParam String token, @RequestParam Integer id){
+        if(commonsService.getIdByToken(token) == null){
+            return new ResponseEntity<String>("No autorizado", HttpStatus.FORBIDDEN);
+        }
+
         if (animalService.deleteAnimal(token, id)){
             return new ResponseEntity<>("Animal borrado", HttpStatus.OK);
         }

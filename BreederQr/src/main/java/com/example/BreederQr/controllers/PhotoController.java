@@ -4,6 +4,7 @@ import com.example.BreederQr.models.breedingplace.BreederPlaceWrapper;
 import com.example.BreederQr.models.breedingplace.BreedingPlace;
 import com.example.BreederQr.models.photo.Photo;
 import com.example.BreederQr.models.photo.PhotoWrapper;
+import com.example.BreederQr.services.CommonsService;
 import com.example.BreederQr.services.PhotoService;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,9 +23,14 @@ import java.util.Optional;
 @RequestMapping("/photo")
 public class PhotoController {
     PhotoService photoService;
+    CommonsService commonsService;
 
     @PostMapping(value = "/postPhoto", consumes = "multipart/form-data")
     public ResponseEntity<String> saveBreedingPlace(@Valid @ModelAttribute PhotoWrapper photoWrapper, @RequestParam String token){
+        if(commonsService.getIdByToken(token) == null){
+            return new ResponseEntity<String>("No autorizado", HttpStatus.FORBIDDEN);
+        }
+
         photoService.postPhoto(token, photoWrapper);
         return new ResponseEntity<>("Foto subida exitosamente", HttpStatus.OK);
     }
@@ -42,6 +48,10 @@ public class PhotoController {
 
     @PutMapping("/deletePhoto")
     public ResponseEntity<?> softDeleteBreedingPlace(@RequestParam Integer idPhoto, @RequestParam String token){
+        if(commonsService.getIdByToken(token) == null){
+            return new ResponseEntity<String>("No autorizado", HttpStatus.FORBIDDEN);
+        }
+
         if (photoService.deletePhoto(idPhoto, token)){
             return new ResponseEntity<>("Imagen borrada", HttpStatus.OK);
         }
