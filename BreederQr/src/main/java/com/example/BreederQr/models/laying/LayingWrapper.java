@@ -4,7 +4,8 @@ import lombok.Data;
 
 @Data
 public class LayingWrapper {
-    Integer idAnimal;
-    Integer amount;
-    Integer deads;
+    private Integer idAnimal;
+    private Integer amount;
+    private Integer deads;
+    private String token;
 }

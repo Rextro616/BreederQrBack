@@ -25,12 +25,12 @@ public class LayingController {
     CommonsService commonsService;
 
     @PostMapping("/postLaying")
-    public ResponseEntity<String> createLaying (@Valid @RequestBody LayingWrapper layingWrapper, @RequestParam String token) {
-        if(commonsService.getIdByToken(token) == null){
+    public ResponseEntity<String> createLaying (@Valid @RequestBody LayingWrapper layingWrapper) {
+        if(commonsService.getIdByToken(layingWrapper.getToken()) == null){
             return new ResponseEntity<String>("No autorizado", HttpStatus.FORBIDDEN);
         }
 
-        layingService.createLaying(layingWrapper, token);
+        layingService.createLaying(layingWrapper, layingWrapper.getToken());
         return new ResponseEntity<>("Puesta registrada exitosamente", HttpStatus.OK);
     }
 
@@ -56,12 +56,12 @@ public class LayingController {
     }
 
     @PutMapping("/putLaying")
-    public ResponseEntity<String> putLaying(@Valid @RequestBody LayingWrapper layingWrapper, @RequestParam String token, @RequestParam Integer id){
-        if(commonsService.getIdByToken(token) == null){
+    public ResponseEntity<String> putLaying(@Valid @RequestBody LayingWrapper layingWrapper, @RequestParam Integer id){
+        if(commonsService.getIdByToken(layingWrapper.getToken()) == null){
             return new ResponseEntity<String>("No autorizado", HttpStatus.FORBIDDEN);
         }
 
-        if (layingService.putLaying(layingWrapper, token, id)){
+        if (layingService.putLaying(layingWrapper, layingWrapper.getToken(), id)){
             return new ResponseEntity<>("Puesta actualizada correctamente", HttpStatus.OK);
         }
 
