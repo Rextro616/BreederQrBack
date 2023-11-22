@@ -31,9 +31,12 @@ public interface PhotoRepository extends JpaRepository<Photo, Integer> {
     @Query(value = "SELECT id, photo, id_animal, " +
             "created_at, created_by, deleted, deleted_at, deleted_by, updated_at, updated_by " +
             "FROM photo " +
-            "WHERE id_animal = ?1 AND deleted is null", nativeQuery = true)
+            "WHERE id_animal = ?1 AND deleted is null " +
+            "LIMIT ?2 , ?3", nativeQuery = true)
     Optional<List<Photo>> getPhoto(
-            @Param("id_animal")Integer idAnimal
+            @Param("id_animal")Integer idAnimal,
+            @Param("where") Integer where,
+            @Param("from") Integer from
     );
 
     @Transactional

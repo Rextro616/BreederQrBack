@@ -35,9 +35,12 @@ public interface AnimalRepository extends JpaRepository<Animal, Integer> {
     @Transactional
     @Query(value = "SELECT id, name, id_specie, id_breeding_place, birthday, description, register_number, gender, qr, " +
             "created_at, created_by, deleted, deleted_at, deleted_by, updated_at, updated_by " +
-            "FROM animal WHERE id_breeding_place = ?1 AND deleted is null", nativeQuery = true)
+            "FROM animal WHERE id_breeding_place = ?1 AND deleted is null " +
+            "LIMIT ?2 , ?3", nativeQuery = true)
     Optional<List<Animal>> getAllAnimals(
-            @Param("id_breeding_place") Integer idBreedingPlace
+            @Param("id_breeding_place") Integer idBreedingPlace,
+            @Param("where") Integer where,
+            @Param("from") Integer from
     );
 
     @Transactional

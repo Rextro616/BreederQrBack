@@ -36,8 +36,8 @@ public class PhotoController {
     }
 
     @GetMapping("/getPhoto")
-    public ResponseEntity<?> getPhoto(@RequestParam Integer idBreedingPace){
-        Optional<List<Photo>> photo = photoService.getPhoto(idBreedingPace);
+    public ResponseEntity<?> getPhoto(@RequestParam Integer idBreedingPace, @RequestParam Integer where, @RequestParam Integer from){
+        Optional<List<Photo>> photo = photoService.getPhoto(idBreedingPace, where, from);
 
         if(photo.isPresent()){
             return new ResponseEntity<>(photo.get(), HttpStatus.OK);

@@ -28,7 +28,7 @@ public class BreederController {
     BreederService breederService;
 
     @PostMapping("postBreeder")
-    public ResponseEntity<String> createBreeder (@Valid @ModelAttribute BreederWrapper breeder) {
+    public ResponseEntity<String> createBreeder (@Valid @RequestBody BreederWrapper breeder) {
         if (breederService.createBreeder(breeder)){
             return ResponseEntity.ok().body("usuario creado");
         } else {
@@ -45,7 +45,7 @@ public class BreederController {
     }
 
     @PostMapping("/putBreeder")
-    public  ResponseEntity<?> updateBreeder(@Valid @ModelAttribute BreederWrapper breeder, @RequestParam String token) {
+    public  ResponseEntity<?> updateBreeder(@Valid @RequestBody BreederWrapper breeder, @RequestParam String token) {
         Breeder breeder1 = breederService.putBreeder(breeder, token);
 
         if (breeder1 != null){

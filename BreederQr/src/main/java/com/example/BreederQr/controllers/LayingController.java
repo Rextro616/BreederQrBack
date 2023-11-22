@@ -25,7 +25,7 @@ public class LayingController {
     CommonsService commonsService;
 
     @PostMapping("/postLaying")
-    public ResponseEntity<String> createLaying (@Valid @ModelAttribute LayingWrapper layingWrapper, @RequestParam String token) {
+    public ResponseEntity<String> createLaying (@Valid @RequestBody LayingWrapper layingWrapper, @RequestParam String token) {
         if(commonsService.getIdByToken(token) == null){
             return new ResponseEntity<String>("No autorizado", HttpStatus.FORBIDDEN);
         }
@@ -35,8 +35,8 @@ public class LayingController {
     }
 
     @GetMapping("/getAllLayings")
-    public ResponseEntity<?> getAllLayings(@RequestParam Integer idAnimal){
-        Optional<List<Laying>> layings = layingService.getAllLayings(idAnimal);
+    public ResponseEntity<?> getAllLayings(@RequestParam Integer idAnimal, @RequestParam Integer where, @RequestParam Integer from){
+        Optional<List<Laying>> layings = layingService.getAllLayings(idAnimal, where, from);
 
         if (layings.isPresent()){
             return new ResponseEntity<>(layings.get(), HttpStatus.OK);
@@ -56,7 +56,7 @@ public class LayingController {
     }
 
     @PutMapping("/putLaying")
-    public ResponseEntity<String> putLaying(@Valid @ModelAttribute LayingWrapper layingWrapper, @RequestParam String token, @RequestParam Integer id){
+    public ResponseEntity<String> putLaying(@Valid @RequestBody LayingWrapper layingWrapper, @RequestParam String token, @RequestParam Integer id){
         if(commonsService.getIdByToken(token) == null){
             return new ResponseEntity<String>("No autorizado", HttpStatus.FORBIDDEN);
         }

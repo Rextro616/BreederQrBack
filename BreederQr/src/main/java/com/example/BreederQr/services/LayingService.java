@@ -26,9 +26,9 @@ public class LayingService {
                 LocalDateTime.now(),
                 idBreeder);
     }
-    public Optional<List<Laying>> getAllLayings(Integer idAnimal){
-        if (layingRepository.getAllLayings(idAnimal).isPresent()){
-            return layingRepository.getAllLayings(idAnimal);
+    public Optional<List<Laying>> getAllLayings(Integer idAnimal, Integer where, Integer from){
+        if (layingRepository.getAllLayings(idAnimal, where, from).isPresent()){
+            return layingRepository.getAllLayings(idAnimal, where, from);
         }
         return Optional.empty();
     }

@@ -40,10 +40,10 @@ public class AnimalService {
                 LocalDateTime.now(),
                 idBreeder);
     }
-    public Optional<List<Animal>> getAllAnimals(String token){
+    public Optional<List<Animal>> getAllAnimals(String token, Integer where, Integer from){
         Optional<BreedingPlace> breedingPlace = breedingPlaceService.getBreedingPlace(token);
         if (breedingPlace.isPresent()){
-            Optional<List<Animal>> animals = animalRepository.getAllAnimals(breedingPlace.get().getId());
+            Optional<List<Animal>> animals = animalRepository.getAllAnimals(breedingPlace.get().getId(), where, from);
             if (animals.isPresent()){
                 return animals;
             }

@@ -31,9 +31,12 @@ public interface LayingRepository extends JpaRepository<Laying, Integer> {
     @Transactional
     @Query(value = "SELECT id, id_animal, amount, deads, " +
             "created_at, created_by, deleted, deleted_at, deleted_by, updated_at, updated_by " +
-            "FROM laying WHERE id_animal = ?1 AND deleted is null", nativeQuery = true)
+            "FROM laying WHERE id_animal = ?1 AND deleted is null " +
+            "LIMIT ?2 , ?3", nativeQuery = true)
     Optional<List<Laying>> getAllLayings(
-            @Param("id_animal") Integer idAnimal
+            @Param("id_animal") Integer idAnimal,
+            @Param("where") Integer where,
+            @Param("from") Integer from
     );
 
     @Transactional
@@ -67,6 +70,14 @@ public interface LayingRepository extends JpaRepository<Laying, Integer> {
             @Param("deleted") Boolean deleted,
             @Param("deleted_at") LocalDateTime deletedAt,
             @Param("deleted_by") Integer deletedBy,
+            @Param("id") Integer id
+    );
+
+    @Transactional
+    @Query(value = "SELECT id, id_animal, amount, deads, " +
+            "created_at, created_by, deleted, deleted_at, deleted_by, updated_at, updated_by " +
+            "FROM laying WHERE id = ?1 AND deleted is null", nativeQuery = true)
+    Optional<Laying> getDeads(
             @Param("id") Integer id
     );
 }

@@ -6,6 +6,7 @@ import com.example.BreederQr.repository.BreedingPlaceRepository;
 import com.example.BreederQr.services.AnimalService;
 import com.example.BreederQr.services.CommonsService;
 import com.google.zxing.WriterException;
+import io.swagger.models.auth.In;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
@@ -26,8 +27,8 @@ public class AnimalController {
     AnimalService animalService;
     CommonsService commonsService;
 
-    @PostMapping(value = "/postAnimal", consumes = "multipart/form-data")
-    public ResponseEntity<String> createAnimal (@Valid @ModelAttribute AnimalWrapper animalWrapper, @RequestParam String token) throws IOException, WriterException {
+    @PostMapping("/postAnimal")
+    public ResponseEntity<String> createAnimal (@Valid @RequestBody AnimalWrapper animalWrapper, @RequestParam String token) throws IOException, WriterException {
         if(commonsService.getIdByToken(token) == null){
             return new ResponseEntity<String>("No autorizado", HttpStatus.FORBIDDEN);
         }
@@ -37,12 +38,12 @@ public class AnimalController {
     }
 
     @GetMapping("/getAllAnimals")
-    public ResponseEntity<?> getAllAnimals(@RequestParam String token){
+    public ResponseEntity<?> getAllAnimals(@RequestParam String token, @RequestParam Integer where, @RequestParam Integer from){
         if(commonsService.getIdByToken(token) == null){
             return new ResponseEntity<String>("No autorizado", HttpStatus.FORBIDDEN);
         }
 
-        Optional<List<Animal>> animals = animalService.getAllAnimals(token);
+        Optional<List<Animal>> animals = animalService.getAllAnimals(token, where, from);
 
         if (animals.isPresent()){
             return new ResponseEntity<>(animals.get(), HttpStatus.OK);
@@ -62,7 +63,7 @@ public class AnimalController {
     }
 
     @PostMapping(value = "/putAnimal", consumes = "multipart/form-data")
-    public ResponseEntity<String> putAnimal(@Valid @ModelAttribute AnimalWrapper animalWrapper, @RequestParam String token, @RequestParam Integer id) throws IOException, WriterException {
+    public ResponseEntity<String> putAnimal(@Valid @RequestBody AnimalWrapper animalWrapper, @RequestParam String token, @RequestParam Integer id) throws IOException, WriterException {
         if(commonsService.getIdByToken(token) == null){
             return new ResponseEntity<String>("No autorizado", HttpStatus.FORBIDDEN);
         }

@@ -31,8 +31,8 @@ public class PhotoService {
                 );
     }
 
-    public Optional<List<Photo>> getPhoto(Integer idBreedingPlace){
-        return photoRepository.getPhoto(idBreedingPlace);
+    public Optional<List<Photo>> getPhoto(Integer idBreedingPlace, Integer where, Integer from){
+        return photoRepository.getPhoto(idBreedingPlace, where, from);
     }
 
     public Boolean deletePhoto(Integer idPhoto, String token){
