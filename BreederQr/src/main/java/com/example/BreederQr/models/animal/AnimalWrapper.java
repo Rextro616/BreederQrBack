@@ -12,5 +12,6 @@ public class AnimalWrapper {
     private String description;
     private String registerNumber;
     private String gender;
+    private String token;
 
 }

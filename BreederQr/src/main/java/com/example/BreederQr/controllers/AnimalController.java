@@ -28,12 +28,12 @@ public class AnimalController {
     CommonsService commonsService;
 
     @PostMapping("/postAnimal")
-    public ResponseEntity<String> createAnimal (@Valid @RequestBody AnimalWrapper animalWrapper, @RequestParam String token) throws IOException, WriterException {
-        if(commonsService.getIdByToken(token) == null){
+    public ResponseEntity<String> createAnimal (@Valid @RequestBody AnimalWrapper animalWrapper) throws IOException, WriterException {
+        if(commonsService.getIdByToken(animalWrapper.getToken()) == null){
             return new ResponseEntity<String>("No autorizado", HttpStatus.FORBIDDEN);
         }
 
-        animalService.createAnimal(animalWrapper, token);
+        animalService.createAnimal(animalWrapper, animalWrapper.getToken());
         return new ResponseEntity<>("Animal creado exitosamente", HttpStatus.OK);
     }
 
