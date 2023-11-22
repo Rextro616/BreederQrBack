@@ -30,6 +30,7 @@ public class SecurityConfig {
     @Autowired private JwtTokenFilter jwtTokenFilter;
 
     public static final String[] AUTH_WHITELIST = {
+
             "/swagger-resources/**",
             "/actuator/**",
             "/auth/login",
