@@ -10,6 +10,7 @@ import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -26,8 +27,8 @@ public class Specie  {
     private String name;
 
     @JsonIgnore
-    @OneToOne(mappedBy = "specie", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Animal animal;
+    @OneToMany(mappedBy = "specie", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Animal> animal;
 /*
     //Auditable
     @CreatedDate

@@ -4,6 +4,7 @@ import com.example.BreederQr.models.animal.AnimalWrapper;
 import com.example.BreederQr.models.animal.Animal;
 import com.example.BreederQr.repository.BreedingPlaceRepository;
 import com.example.BreederQr.services.AnimalService;
+import com.google.zxing.WriterException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,7 +25,7 @@ public class AnimalController {
     AnimalService animalService;
 
     @PostMapping(value = "/postAnimal", consumes = "multipart/form-data")
-    public ResponseEntity<String> createAnimal (@Valid @ModelAttribute AnimalWrapper animalWrapper, @RequestParam String token) {
+    public ResponseEntity<String> createAnimal (@Valid @ModelAttribute AnimalWrapper animalWrapper, @RequestParam String token) throws IOException, WriterException {
         animalService.createAnimal(animalWrapper, token);
         return new ResponseEntity<>("Animal creado exitosamente", HttpStatus.OK);
     }
@@ -50,7 +52,7 @@ public class AnimalController {
     }
 
     @PostMapping(value = "/putAnimal", consumes = "multipart/form-data")
-    public ResponseEntity<String> putAnimal(@Valid @ModelAttribute AnimalWrapper animalWrapper, @RequestParam String token, @RequestParam Integer id){
+    public ResponseEntity<String> putAnimal(@Valid @ModelAttribute AnimalWrapper animalWrapper, @RequestParam String token, @RequestParam Integer id) throws IOException, WriterException {
         if (animalService.putAnimal(animalWrapper, token, id)){
             return new ResponseEntity<>("Animal actualizado correctamente", HttpStatus.OK);
         }

@@ -20,7 +20,7 @@ public class AuthApi {
     AuthenticationManager authManager;
     @Autowired
     JwtTokenUtil jwtUtil;
-
+    @CrossOrigin(origins = "http://localhost:8080")
     @PostMapping("/auth/login")
     public ResponseEntity<?> login(@RequestBody @Valid AuthRequest request) {
         try {
