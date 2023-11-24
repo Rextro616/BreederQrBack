@@ -23,10 +23,13 @@ public class AnimalService {
     AnimalRepository animalRepository;
     CommonsService commonsService;
     BreedingPlaceService breedingPlaceService;
+    QrGenerator qrGenerator;
 
     public void createAnimal(AnimalWrapper animal, String token) throws IOException, WriterException {
         Integer idBreeder = commonsService.getIdByToken(token);
-        Path path = QrGenerator.generateQRCode(animal);
+        Path path = qrGenerator.generateQRCode(animal);
+
+        String pathImage = String.valueOf(path).replace("http","https");
 
         animalRepository.insert(
                 animal.getName(),
@@ -36,7 +39,7 @@ public class AnimalService {
                 animal.getDescription(),
                 animal.getRegisterNumber(),
                 animal.getGender(),
-                String.valueOf(path),
+                String.valueOf(pathImage),
                 LocalDateTime.now(),
                 idBreeder);
     }
@@ -61,9 +64,10 @@ public class AnimalService {
 
         if (animal.isPresent()){
             Animal animalChange = animal.get();
-            CommonsService.deleteImage(animalChange.getQr());
 
-            Path path = QrGenerator.generateQRCode(animalWrapper);
+            Path path = qrGenerator.generateQRCode(animalWrapper);
+
+            String pathImage = String.valueOf(path).replace("http","https");
 
             animalRepository.updateAnimal(
                     animalChange.getId(),
@@ -73,7 +77,7 @@ public class AnimalService {
                     animalWrapper.getDescription(),
                     animalWrapper.getRegisterNumber(),
                     animalWrapper.getGender(),
-                    String.valueOf(path),
+                    String.valueOf(pathImage),
                     LocalDateTime.now(),
                     idBreeder
             );
@@ -91,7 +95,7 @@ public class AnimalService {
 
         if (animal.isPresent()){
             Animal animal1 = animal.get();
-            CommonsService.deleteImage(animal1.getQr());
+
             animalRepository.softDeleteAnimal(
                     true,
                     LocalDateTime.now(),

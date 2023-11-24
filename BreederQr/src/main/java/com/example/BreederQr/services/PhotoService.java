@@ -25,8 +25,9 @@ public class PhotoService {
     public void postPhoto(String token, PhotoWrapper photoWrapper) throws IOException {
         Integer idBreeder = commonsService.getIdByToken(token);
         String path = fileUpload.uploadFile(photoWrapper.getPhoto());
+        String pathImage = String.valueOf(path).replace("http","https");
         photoRepository.insert(
-                path,
+                pathImage,
                 photoWrapper.getIdAnimal(),
                 LocalDateTime.now(),
                 idBreeder
@@ -42,7 +43,6 @@ public class PhotoService {
         Optional<Photo> photo = photoRepository.getPhotoById(idPhoto);
 
         if (photo.isPresent()){
-            CommonsService.deleteImage(photo.get().getPhoto());
 
             photoRepository.softDeletePhoto(
                     true,

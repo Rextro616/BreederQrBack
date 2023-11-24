@@ -29,11 +29,6 @@ public class CommonsService {
 
  */
 
-    public static void deleteImage(String path){
-        File myObj = new File(path);
-        myObj.delete();
-    }
-
     public Integer getIdByToken(String token){
         String[] jwtSubject = jwtTokenUtil.getSubject(token).split(",");
         return Integer.parseInt(jwtSubject[0]);

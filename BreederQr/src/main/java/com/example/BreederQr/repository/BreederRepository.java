@@ -1,6 +1,7 @@
 package com.example.BreederQr.repository;
 
 import com.example.BreederQr.models.breeder.Breeder;
+import io.swagger.models.auth.In;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -47,13 +48,21 @@ public interface BreederRepository extends JpaRepository<Breeder, Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "UPDATE breeder SET password = :password, updated_at = :updated_at WHERE id = :id",
+    @Query(value = "UPDATE breeder SET name :name, last_name :last_name, second_last_name :second_last_name, " +
+            "username :username, password = :password, mail :mail, " +
+            "updated_at = :updated_at, updated_by = :updated_by " +
+            "WHERE id = :id",
             nativeQuery = true)
     void updateBreeder(
+            @Param("name") String name,
+            @Param("last_name") String lastName,
+            @Param("second_last_name") String secondLastName,
+            @Param("username") String username,
             @Param("password") String password,
             @Param("id") Integer id,
-            @Param("updated_at") LocalDateTime updated_at
-    );
+            @Param("updated_at") LocalDateTime updatedAt,
+            @Param("updated_by") Integer updatedBy
+            );
 
     @Transactional
     @Modifying

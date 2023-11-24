@@ -47,9 +47,18 @@ public class BreederService {
 
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String password = passwordEncoder.encode(breeder.getPassword());
+        Integer idBreeder = commonsService.getIdByToken(token);
 
         if (breeder1.isPresent()){
-            breederRepository.updateBreeder(password, commonsService.getIdByToken(token), LocalDateTime.now());
+            breederRepository.updateBreeder(
+                    breeder.getName(),
+                    breeder.getLast_name(),
+                    breeder.getSecond_last_name(),
+                    breeder.getUsername(),
+                    password,
+                    breeder1.get().getId(),
+                    LocalDateTime.now(),
+                    idBreeder);
             return breederRepository.searchBreeder(commonsService.getIdByToken(token)).get();
         }
 

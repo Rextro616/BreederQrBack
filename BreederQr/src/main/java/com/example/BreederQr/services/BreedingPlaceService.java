@@ -22,10 +22,12 @@ public class BreedingPlaceService {
         String path = fileUpload.uploadFile(breederPlaceWrapper.getImage());
         Integer idBreeder = commonsService.getIdByToken(token);
 
+        String pathImage = String.valueOf(path).replace("http","https");
+
         breedingPlaceRepository.saveBreedingPlaceRepo(
                 breederPlaceWrapper.getAddress(),
                 breederPlaceWrapper.getDescription(),
-                path,
+                pathImage,
                 breederPlaceWrapper.getName(),
                 breederPlaceWrapper.getRegister_number(),
                 idBreeder,
@@ -48,11 +50,14 @@ public class BreedingPlaceService {
             //System.out.println(fileUpload.deleteFile());
 
             String path = fileUpload.uploadFile(breederPlaceWrapper.getImage());
+
+            String pathImage = String.valueOf(path).replace("http","https");
+
             breedingPlaceRepository.updateBreedingPlace(
                     breedingPlace1.getId(),
                     breederPlaceWrapper.getAddress(),
                     breederPlaceWrapper.getDescription(),
-                    path,
+                    pathImage,
                     breederPlaceWrapper.getName(),
                     breederPlaceWrapper.getRegister_number(),
                     LocalDateTime.now(),
@@ -71,7 +76,7 @@ public class BreedingPlaceService {
 
         if (breedingPlace.isPresent()){
             BreedingPlace breedingPlace1 = breedingPlace.get();
-            CommonsService.deleteImage(breedingPlace1.getLogo());
+
             breedingPlaceRepository.softDeleteBreedingPlace(
                     true,
                     LocalDateTime.now(),
