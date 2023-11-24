@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,7 +27,7 @@ public class PhotoController {
     CommonsService commonsService;
 
     @PostMapping(value = "/postPhoto", consumes = "multipart/form-data")
-    public ResponseEntity<String> saveBreedingPlace(@Valid @ModelAttribute PhotoWrapper photoWrapper, @RequestParam String token){
+    public ResponseEntity<String> saveBreedingPlace(@Valid @ModelAttribute PhotoWrapper photoWrapper, @RequestParam String token) throws IOException {
         if(commonsService.getIdByToken(token) == null){
             return new ResponseEntity<String>("No autorizado", HttpStatus.FORBIDDEN);
         }

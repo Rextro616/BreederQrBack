@@ -9,6 +9,7 @@ import com.google.zxing.WriterException;
 import io.swagger.models.auth.In;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.aop.scope.ScopedProxyUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -75,6 +76,7 @@ public class AnimalController {
         return new ResponseEntity<>("Error al actualizar", HttpStatus.NOT_FOUND);
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @PutMapping("/deleteAnimal")
     public ResponseEntity<?> softDeleteAnimal(@RequestParam String token, @RequestParam Integer id){
         if(commonsService.getIdByToken(token) == null){

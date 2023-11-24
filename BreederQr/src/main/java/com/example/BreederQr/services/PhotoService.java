@@ -5,10 +5,12 @@ import com.example.BreederQr.models.animal.AnimalWrapper;
 import com.example.BreederQr.models.photo.Photo;
 import com.example.BreederQr.models.photo.PhotoWrapper;
 import com.example.BreederQr.repository.PhotoRepository;
+import com.example.BreederQr.services.cloudinary.FileUpload;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -18,11 +20,11 @@ import java.util.Optional;
 public class PhotoService {
     PhotoRepository photoRepository;
     CommonsService commonsService;
+    final FileUpload fileUpload;
 
-    public void postPhoto(String token, PhotoWrapper photoWrapper){
+    public void postPhoto(String token, PhotoWrapper photoWrapper) throws IOException {
         Integer idBreeder = commonsService.getIdByToken(token);
-        String path = CommonsService.uploadImage(photoWrapper.getPhoto(),"/Users/rextro/Documents/Github Repository/BreederQrBack/BreederQr/src/main/resources/files/Animals/");
-
+        String path = fileUpload.uploadFile(photoWrapper.getPhoto());
         photoRepository.insert(
                 path,
                 photoWrapper.getIdAnimal(),

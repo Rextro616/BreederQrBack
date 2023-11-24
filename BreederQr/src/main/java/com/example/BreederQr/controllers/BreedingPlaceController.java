@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.Optional;
 
 @Data
@@ -24,7 +25,7 @@ public class BreedingPlaceController {
     CommonsService commonsService;
 
     @PostMapping(value = "/postBreedingPlace", consumes = "multipart/form-data")
-    public ResponseEntity<String> saveBreedingPlace(@Valid @ModelAttribute BreederPlaceWrapper breederPlaceWrapper, @RequestParam String token){
+    public ResponseEntity<String> saveBreedingPlace(@Valid @ModelAttribute BreederPlaceWrapper breederPlaceWrapper, @RequestParam String token) throws IOException {
         if(commonsService.getIdByToken(token) == null){
             return new ResponseEntity<String>("No autorizado", HttpStatus.FORBIDDEN);
         }
@@ -49,7 +50,7 @@ public class BreedingPlaceController {
     }
 
     @PostMapping(value = "/putBreedingPlace", consumes = "multipart/form-data")
-    public ResponseEntity<String> putBreedingPlace(@Valid @ModelAttribute BreederPlaceWrapper breederPlaceWrapper, @RequestParam String token){
+    public ResponseEntity<String> putBreedingPlace(@Valid @ModelAttribute BreederPlaceWrapper breederPlaceWrapper, @RequestParam String token) throws IOException {
         if(commonsService.getIdByToken(token) == null){
             return new ResponseEntity<String>("No autorizado", HttpStatus.FORBIDDEN);
         }

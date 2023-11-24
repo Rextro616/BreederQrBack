@@ -12,7 +12,7 @@ import java.io.FileOutputStream;
 public class CommonsService {
      JwtTokenUtil jwtTokenUtil;
 
-    public static String uploadImage(MultipartFile file, String path) {
+/*    public static String uploadImage(MultipartFile file, String path) {
         String fileName = file.getOriginalFilename();
         try {
             path = path + fileName;
@@ -26,6 +26,8 @@ public class CommonsService {
         }
         return path;
     }
+
+ */
 
     public static void deleteImage(String path){
         File myObj = new File(path);

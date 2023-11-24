@@ -33,7 +33,7 @@ public interface BreedingPlaceRepository extends JpaRepository<BreedingPlace, In
     @Query(value = "SELECT id, address, description, logo, name, register_number, id_breeder, " +
             "created_at, created_by, deleted, deleted_at, deleted_by, updated_at, updated_by " +
             "FROM breeding_place " +
-            "WHERE id_breeder = ?1 AND deleted is null", nativeQuery = true)
+            "WHERE deleted is null AND id_breeder = ?1", nativeQuery = true)
     Optional<BreedingPlace> getBreedingPlaceRepo(
             @Param("id_breeder")Integer idBreeder
     );
@@ -42,7 +42,7 @@ public interface BreedingPlaceRepository extends JpaRepository<BreedingPlace, In
     @Modifying
     @Query(value = "UPDATE breeding_place SET address = :address, description = :description, logo = :logo, " +
             "name = :name, register_number = :register_number, updated_at = :updated_at, updated_by = :updated_by " +
-            "WHERE id = :id AND deleted is null",
+            "WHERE deleted is null AND id = :id",
             nativeQuery = true)
     void updateBreedingPlace(
             @Param("id")Integer id,
