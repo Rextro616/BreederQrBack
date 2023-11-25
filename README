@@ -1,0 +1,7 @@
+Instrucciones:
+
+Crear un schema en sql llamado "breederqr".
+
+Colocar las credenciales de sql en el archivo "aplication.properties".
+
+Correr la aplicación.
