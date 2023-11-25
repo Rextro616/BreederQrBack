@@ -4,7 +4,7 @@ import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 
 @Data
-public class AnimalWrapper {
+public class  AnimalWrapper {
     private String name;
     private Integer specie;
     private Integer breedingPlace;

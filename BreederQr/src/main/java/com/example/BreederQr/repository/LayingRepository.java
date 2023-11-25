@@ -74,10 +74,12 @@ public interface LayingRepository extends JpaRepository<Laying, Integer> {
     );
 
     @Transactional
-    @Query(value = "SELECT id, id_animal, amount, deads, " +
-            "created_at, created_by, deleted, deleted_at, deleted_by, updated_at, updated_by " +
-            "FROM laying WHERE id = ?1 AND deleted is null", nativeQuery = true)
-    Optional<Laying> getDeads(
-            @Param("id") Integer id
-    );
+    @Query(value = "SELECT sum(deads) as deads " +
+            "FROM laying WHERE deleted is null", nativeQuery = true)
+    Optional<Integer> getDeads();
+
+    @Transactional
+    @Query(value = "SELECT sum(amount) as total " +
+            "FROM laying WHERE deleted is null", nativeQuery = true)
+    Optional<Integer> getAmount();
 }

@@ -76,4 +76,22 @@ public class LayingService {
         }
         return false;
     }
+
+    public Integer getAmount(){
+        Optional<Integer> amount = layingRepository.getAmount();
+        if (amount.isPresent()){
+            return amount.get();
+        }
+
+        return 0;
+    }
+
+    public Integer getDeads(){
+        Optional<Integer> deads = layingRepository.getDeads();
+        if (deads.isPresent()){
+            return deads.get();
+        }
+
+        return 0;
+    }
 }

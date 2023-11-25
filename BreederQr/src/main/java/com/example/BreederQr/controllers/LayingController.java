@@ -79,4 +79,14 @@ public class LayingController {
         }
         return new ResponseEntity<>("Error al borrar al animal", HttpStatus.BAD_REQUEST);
     }
+
+    @GetMapping("/getAmount")
+    public ResponseEntity<Integer> getAmount(){
+        return new ResponseEntity<>(layingService.getAmount(),HttpStatus.ACCEPTED);
+    }
+
+    @GetMapping("/getDeads")
+    public ResponseEntity<Integer> getDeads(){
+        return new ResponseEntity<>(layingService.getDeads(),HttpStatus.ACCEPTED);
+    }
 }

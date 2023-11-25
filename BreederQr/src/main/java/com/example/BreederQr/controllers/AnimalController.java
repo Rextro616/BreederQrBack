@@ -64,12 +64,12 @@ public class AnimalController {
     }
 
     @PostMapping(value = "/putAnimal", consumes = "multipart/form-data")
-    public ResponseEntity<String> putAnimal(@Valid @RequestBody AnimalWrapper animalWrapper, @RequestParam String token, @RequestParam Integer id) throws IOException, WriterException {
-        if(commonsService.getIdByToken(token) == null){
+    public ResponseEntity<String> putAnimal(@Valid @ModelAttribute AnimalWrapper animalWrapper, @RequestParam Integer id) throws IOException, WriterException {
+        if(commonsService.getIdByToken(animalWrapper.getToken()) == null){
             return new ResponseEntity<String>("No autorizado", HttpStatus.FORBIDDEN);
         }
 
-        if (animalService.putAnimal(animalWrapper, token, id)){
+        if (animalService.putAnimal(animalWrapper, animalWrapper.getToken(), id)){
             return new ResponseEntity<>("Animal actualizado correctamente", HttpStatus.OK);
         }
 
