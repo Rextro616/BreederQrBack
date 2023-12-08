@@ -88,4 +88,10 @@ public class AnimalController {
         }
         return new ResponseEntity<>("Error al borrar al animal", HttpStatus.BAD_REQUEST);
     }
+
+    @GetMapping("/getDeletedAnimals")
+    public ResponseEntity<?> getDeletedAnimals(@RequestParam Integer idBreedingPlace){
+
+        return new ResponseEntity<>(animalService.getDeletedAnimal(idBreedingPlace), HttpStatus.OK);
+    }
 }

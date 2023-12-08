@@ -77,21 +77,13 @@ public class LayingService {
         return false;
     }
 
-    public Integer getAmount(){
-        Optional<Integer> amount = layingRepository.getAmount();
-        if (amount.isPresent()){
-            return amount.get();
-        }
-
-        return 0;
+    public Integer getAmount(Integer idBreedingPlace){
+        return layingRepository.getAmount(idBreedingPlace);
     }
 
-    public Integer getDeads(){
-        Optional<Integer> deads = layingRepository.getDeads();
-        if (deads.isPresent()){
-            return deads.get();
-        }
+    public Integer getDeads(Integer idBreedingPlace){
+        Integer deads = layingRepository.getDeads(idBreedingPlace);
 
-        return 0;
+        return deads;
     }
 }

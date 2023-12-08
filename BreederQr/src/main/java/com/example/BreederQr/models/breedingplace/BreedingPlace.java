@@ -25,7 +25,7 @@ public class BreedingPlace {
     @Column(unique = true, nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "id_breeder", nullable = false)
     private Breeder breeder;
 
@@ -46,7 +46,7 @@ public class BreedingPlace {
 
     @JsonIgnore
     @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(mappedBy = "breedingPlace", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "breedingPlace", cascade = CascadeType.MERGE)
     private List<Animal> animals;
 
     //Auditable

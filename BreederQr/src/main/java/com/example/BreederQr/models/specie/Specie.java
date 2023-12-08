@@ -27,7 +27,7 @@ public class Specie  {
     private String name;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "specie", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "specie", cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private List<Animal> animal;
 /*
     //Auditable

@@ -2,9 +2,11 @@ package com.example.BreederQr.repository;
 
 import com.example.BreederQr.models.animal.Animal;
 import com.example.BreederQr.models.laying.Laying;
+import io.swagger.models.auth.In;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
@@ -73,13 +75,10 @@ public interface LayingRepository extends JpaRepository<Laying, Integer> {
             @Param("id") Integer id
     );
 
-    @Transactional
-    @Query(value = "SELECT sum(deads) as deads " +
-            "FROM laying WHERE deleted is null", nativeQuery = true)
-    Optional<Integer> getDeads();
+    @Procedure("get_deads")
+    Integer getDeads(Integer id);
 
-    @Transactional
-    @Query(value = "SELECT sum(amount) as total " +
-            "FROM laying WHERE deleted is null", nativeQuery = true)
-    Optional<Integer> getAmount();
+
+    @Procedure("get_total")
+    Integer getAmount(Integer id);
 }

@@ -81,12 +81,12 @@ public class LayingController {
     }
 
     @GetMapping("/getAmount")
-    public ResponseEntity<Integer> getAmount(){
-        return new ResponseEntity<>(layingService.getAmount(),HttpStatus.ACCEPTED);
+    public ResponseEntity<Integer> getAmount(Integer idBreedingPlace){
+        return new ResponseEntity<>(layingService.getAmount(idBreedingPlace),HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/getDeads")
-    public ResponseEntity<Integer> getDeads(){
-        return new ResponseEntity<>(layingService.getDeads(),HttpStatus.ACCEPTED);
+    public ResponseEntity<Integer> getDeads(Integer idBreedingPlace){
+        return new ResponseEntity<>(layingService.getDeads(idBreedingPlace),HttpStatus.ACCEPTED);
     }
 }

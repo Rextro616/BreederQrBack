@@ -28,11 +28,11 @@ public class Animal{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "id_specie", nullable = false)
     Specie specie;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "id_breeding_place", nullable = false)
     BreedingPlace breedingPlace;
 
@@ -57,12 +57,12 @@ public class Animal{
 
     @JsonIgnore
     @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(mappedBy = "animal", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "animal", cascade = CascadeType.MERGE)
     private List<Laying> layings;
 
     @JsonIgnore
     @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(mappedBy = "animal", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "animal", cascade = CascadeType.MERGE)
     private List<Photo> photos;
 
     //Auditable

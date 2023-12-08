@@ -82,4 +82,9 @@ public interface AnimalRepository extends JpaRepository<Animal, Integer> {
             @Param("deleted_by") Integer deletedBy,
             @Param("id") Integer id
     );
+
+    @Query(nativeQuery = true, value = "SELECT search_deleted_animal(:id_breeding_place) FROM animal")
+    Integer getDeletedAnimal(
+            @Param("id_breeding_place") Integer idBreedingPlace
+    );
 }

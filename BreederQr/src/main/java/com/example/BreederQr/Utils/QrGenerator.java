@@ -27,7 +27,7 @@ public class QrGenerator {
     FileUploadImpl fileUpload;
 
     public Path generateQRCode(AnimalWrapper animal) throws WriterException, IOException {
-        String qrCodePath = "/Users/rextro/Documents/Github Repository/BreederQrBack/BreederQr/src/main/resources/files/qr/";
+        String qrCodePath = "/home/ubuntu/";
         String qrCodeName = qrCodePath+animal.getName()+"-QRCODE.png";
 
         var qrCodeWriter = new QRCodeWriter();

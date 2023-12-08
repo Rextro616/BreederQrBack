@@ -44,7 +44,7 @@ public class Breeder implements UserDetails {
     private String mail;
 
     @JsonIgnore
-    @OneToOne(mappedBy = "breeder", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "breeder", cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     private BreedingPlace breedingPlace;
 
     @Override

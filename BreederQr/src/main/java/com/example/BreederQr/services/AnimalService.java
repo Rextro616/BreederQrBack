@@ -106,4 +106,8 @@ public class AnimalService {
         }
         return false;
     }
+
+    public Integer getDeletedAnimal(Integer idBreedingPlace){
+        return animalRepository.getDeletedAnimal(idBreedingPlace);
+    }
 }
